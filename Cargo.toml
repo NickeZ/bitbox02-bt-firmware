@@ -1,0 +1,3 @@
+[workspace]
+members = [ "bitbox02-bt","da14531", "da14531-hal", "da14531-sdk", "da14531-sdk-macros"]
+resolver = "2"
