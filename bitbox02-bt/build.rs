@@ -1,10 +1,10 @@
-use std::fs::File;
 use std::env;
-use std::path::PathBuf;
+use std::fs::File;
 use std::io::Write;
-
+use std::path::PathBuf;
 
 fn main() {
+    // TODO(nd): Generate memory.x from user config header files.
     // Put `memory.x` in our output directory and ensure it's
     // on the linker search path.
     let out = &PathBuf::from(env::var_os("OUT_DIR").unwrap());
@@ -22,5 +22,4 @@ fn main() {
 
     println!("cargo::rustc-link-arg=-Wl,-Tlink.x");
     println!("cargo::rustc-link-arg=-nostartfiles");
-
 }

@@ -222,6 +222,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "da14531-sdk-linker"
+version = "0.1.0"
+
+[[package]]
 name = "da14531-sdk-macros"
 version = "0.2.0"
 dependencies = [
