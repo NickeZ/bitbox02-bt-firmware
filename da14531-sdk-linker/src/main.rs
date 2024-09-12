@@ -61,7 +61,7 @@ fn main() {
     if !(CFG_MAX_RX_PACKET_LENGTH >= MIN_PAYLOAD_LENGTH_BY_SPEC
         && CFG_MAX_RX_PACKET_LENGTH <= MAX_PAYLOAD_LENGTH_BY_SPEC)
     {
-        panic!("Config error: invalid value for CFG_MAX_TX_PACKET_LENGTH.");
+        panic!("Config error: invalid value for CFG_MAX_RX_PACKET_LENGTH.");
     }
 
     const __SCT_CFG_MAX_TX_PACKET_LENGTH: i32 = even_to_next_odd_num(CFG_MAX_TX_PACKET_LENGTH);
