@@ -163,11 +163,12 @@ fn main() {
     //  */
     //
     // Automatically calculated non retained heap size
-    const __SCT_AUTO_HEAP_NON_RET_SIZE: i32 = if BLE_CONNECTION_MAX_USER == 1 {
-        1024
-    } else {
-        2048
-    };
+    // XXX(nd): Not used in SDK
+    // const __SCT_AUTO_HEAP_NON_RET_SIZE: i32 = if BLE_CONNECTION_MAX_USER == 1 {
+    //     1024
+    // } else {
+    //     2048
+    // };
 
     // Automatically calculated ENV heap size (macros used by scatter file)
     // Calculation formula is: ENV heap size = (sizeof(struct llc_env_tag)   + KE_HEAP_MEM_RESERVED +
