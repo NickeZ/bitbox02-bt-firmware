@@ -2,11 +2,16 @@ TOOLS=arm-none-eabi-
 SIZE=${TOOLS}size
 OBJCOPY=${TOOLS}objcopy
 TARGET=thumbv6m-none-eabi
-CARGO_FLAGS=-Zbuild-std=core,alloc \
-	    -Zbuild-std-features=panic_immediate_abort,optimize_for_size
 
-# For debugging linking / compiler flag issues use CC_ENABLE_DEBUG_OUTPUT=1 and
-# pass -vv to cargo
+# Compiler smaller verison of core/alloc for release builds
+build-release: CARGO_FLAGS=\
+	-Zbuild-std=core,alloc \
+	-Zbuild-std-features=panic_immediate_abort,optimize_for_size
+
+# For debugging linking / compiler flag issues:
+# * pass -vv to cargo to see all cargo invocations and the output of all build.rs scripts.
+# * use CC_ENABLE_DEBUG_OUTPUT=1 to make the rust crate `cc` print all its
+#   invocations. (combine with -vv to actually see output)
 
 .PHONY: build
 build:

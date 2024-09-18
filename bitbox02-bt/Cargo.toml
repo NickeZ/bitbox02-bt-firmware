@@ -8,6 +8,7 @@ cortex-m = {version = "0.7.7", features=["critical-section-single-core"]}
 #cortex-m-rt = "0.7.3"
 cty = "0.2.2"
 panic-halt = "0.2.0"
+panic-abort = "0.3.2"
 da14531-sdk = {path = "../da14531-sdk", features=["expose_bindings", "profile_custom_server"]}
 da14531-hal = {path = "../da14531-hal"}
 rtt-target = {version = "0.5.0"}

@@ -3,7 +3,11 @@
 
 extern crate alloc;
 
+#[cfg(debug_assertions)]
 use panic_halt as _;
+
+#[cfg(not(debug_assertions))]
+use panic_abort as _;
 
 use da14531_sdk::{
     app_modules::{

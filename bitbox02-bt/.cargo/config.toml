@@ -18,7 +18,7 @@ rustflags = [
     "-C", "link-arg=-mthumb",
     "-C", "link-arg=-march=armv6s-m",
 ]
-runner = "arm-none-eabi-gdb -x jlink.gdb"
+runner = "arm-none-eabi-gdb -x jlink-dev.gdb"
 
 [env]
 SDK_PATH = "/opt/DA145xx_SDK/6.0.22.1401"
@@ -32,4 +32,3 @@ codegen-units = 1
 [profile.dev]
 opt-level = "z"
 lto = true
-codegen-units = 1
