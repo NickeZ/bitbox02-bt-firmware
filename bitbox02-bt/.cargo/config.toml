@@ -1,0 +1,35 @@
+[build]
+target = "thumbv6m-none-eabi"
+
+[target.thumbv6m-none-eabi]
+rustflags = [
+    "-C", "linker=arm-none-eabi-gcc",
+    "-C", "link-arg=-specs=nano.specs",
+    "-C", "link-arg=-specs=nosys.specs",
+    '-C', "default-linker-libraries",
+    # Needed for da14531_symbols.lds
+    "-C", "link-arg=-L/opt/DA145xx_SDK/6.0.22.1401/sdk/common_project_files/misc",
+    "-C", "link-arg=-Wl,-Tldscript_DA14531.lds",
+    # PLEASE don't use wchar anywhere... armCC compiles with 2 byte wchar and GCC with 4 byte.
+    '-C', 'link-arg=-Wl,--no-wchar-size-warning',
+    #"-C", "link-arg=-Wl,-Map=output.map",
+    "-C", "link-arg=-flto",
+    #"-C", "link-arg=-Wl,--nmagic",
+    "-C", "link-arg=-mthumb",
+    "-C", "link-arg=-march=armv6s-m",
+]
+runner = "arm-none-eabi-gdb -x jlink.gdb"
+
+[env]
+SDK_PATH = "/opt/DA145xx_SDK/6.0.22.1401"
+
+[profile.release]
+opt-level = "z"
+lto = true
+debug = true # does not impact final binary
+codegen-units = 1
+
+[profile.dev]
+opt-level = "z"
+lto = true
+codegen-units = 1
