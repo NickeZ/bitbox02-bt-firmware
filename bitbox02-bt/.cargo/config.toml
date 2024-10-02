@@ -12,9 +12,12 @@ rustflags = [
     "-C", "link-arg=-Wl,-Tldscript_DA14531.lds",
     # PLEASE don't use wchar anywhere... armCC compiles with 2 byte wchar and GCC with 4 byte.
     '-C', 'link-arg=-Wl,--no-wchar-size-warning',
-    #"-C", "link-arg=-Wl,-Map=output.map",
+    "-C", "link-arg=-Wl,-Map=output.map",
+    #"-C", "link-arg=-Wl,-u=heap_mem_area_not_ret",
+    #"-C", "link-arg=-Wl,-u,rwip_heap_non_ret",
     "-C", "link-arg=-flto",
     #"-C", "link-arg=-Wl,--nmagic",
+    "-C", "link-arg=-lda14531_sdk",
     "-C", "link-arg=-mthumb",
     "-C", "link-arg=-march=armv6s-m",
 ]

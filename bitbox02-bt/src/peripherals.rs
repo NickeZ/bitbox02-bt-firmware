@@ -2,7 +2,6 @@ use da14531_hal::{
     cm::{peripheral::SCB, Peripherals as CmPeripherals},
     crg_aon::{CrgAon, CrgAonExt},
     crg_top::{CrgTop, CrgTopExt},
-    gpio::p0::Parts,
     nvic::{Nvic, NvicExt},
     pac::Peripherals,
     sys_wdog::{SysWdog, SysWdogExt},
@@ -11,9 +10,8 @@ use da14531_sdk::platform::{
     driver::syscntl::{dcdc_turn_on_in_boost, SyscntlDcdcLevel::SYSCNTL_DCDC_LEVEL_3V0},
     system_library::patch_func,
 };
-use rtt_target::rprintln;
 
-use crate::{app::PeripheralsDriver, app_impl::app};
+use crate::app::PeripheralsDriver;
 
 /// This struct contains all relevant peripherals and implements the `PeripheralsDriver` trait
 pub struct Da14531Peripherals {

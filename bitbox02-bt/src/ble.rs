@@ -5,6 +5,7 @@ use da14531_sdk::app_modules::{
 
 use crate::app::BleDriver;
 
+pub mod char_handlers;
 pub mod config;
 pub mod user_peripheral;
 

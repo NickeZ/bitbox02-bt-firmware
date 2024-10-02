@@ -1,23 +1,23 @@
-use da14531_sdk::{
-    app_modules::app_env_get_conidx,
-    ble_stack::{
-        host::gap::gapc::task::GAPC_PARAM_UPDATED_IND,
-        profiles::custom::custs::custs1::task::{
-            Custs1AttInfoReq, Custs1ValWriteInd, Custs1ValueReqInd, KeMsgCusts1AttInfoRsp,
-            KeMsgCusts1ValueReqRsp, CUSTS1_ATT_INFO_REQ, CUSTS1_VALUE_REQ_IND,
-            CUSTS1_VAL_WRITE_IND,
-        },
-        rwble_hl::error::HlErr::{ATT_ERR_APP_ERROR, ATT_ERR_WRITE_NOT_PERMITTED},
-    },
-    platform::core_modules::ke::{msg::KeMsgId, task::KeTaskId},
-};
+//use da14531_sdk::{
+//    app_modules::app_env_get_conidx,
+//    ble_stack::{
+//        host::gap::gapc::task::GAPC_PARAM_UPDATED_IND,
+//        profiles::custom::custs::custs1::task::{
+//            Custs1AttInfoReq, Custs1ValWriteInd, Custs1ValueReqInd, KeMsgCusts1AttInfoRsp,
+//            KeMsgCusts1ValueReqRsp, CUSTS1_ATT_INFO_REQ, CUSTS1_VALUE_REQ_IND,
+//            CUSTS1_VAL_WRITE_IND,
+//        },
+//        rwble_hl::error::HlErr::{ATT_ERR_APP_ERROR, ATT_ERR_WRITE_NOT_PERMITTED},
+//    },
+//    platform::core_modules::ke::{msg::KeMsgId, task::KeTaskId},
+//};
 
 // This whole thing needs to be simplified with macros!!
 // These are the indices of the entries in the service database
-const SVC1_IDX_UNLOCK_VAL: u16 = 2;
-const SVC1_IDX_LED_READ_VAL: u16 = 5;
-const SVC1_IDX_LED_WRITE_VAL: u16 = 8;
-const SVC1_IDX_TEMP_READ_VAL: u16 = 11;
+//const SVC1_IDX_UNLOCK_VAL: u16 = 2;
+//const SVC1_IDX_LED_READ_VAL: u16 = 5;
+//const SVC1_IDX_LED_WRITE_VAL: u16 = 8;
+//const SVC1_IDX_TEMP_READ_VAL: u16 = 11;
 
 //#[no_mangle]
 //pub fn user_catch_rest_hndl(

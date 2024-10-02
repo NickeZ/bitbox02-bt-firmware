@@ -1,14 +1,20 @@
-# Run the jlink debugger in a separate terminal: `JLinkGDBServer -device da14531 -if SWD`
 target extended-remote :2331
 
 set print asm-demangle on
 
+monitor reset
+
+
 # detect unhandled exceptions, hard faults and panics
 break Default_Handler
 break HardFault_Handler
-break rust_begin_unwind
+#break app.rs:114
 
 load
+
+# Since we are running in RAM the probe might have difficulty finding the
+# correct RTT Block. We specify the block address here.
+eval "monitor exec SetRTTAddr %p", &_SEGGER_RTT
 
 # Start process but immediately halt the processor
 stepi

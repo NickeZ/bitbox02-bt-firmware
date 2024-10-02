@@ -1,31 +1,13 @@
+#![feature(core_intrinsics)]
 #![no_std]
 #![no_main]
-
 extern crate alloc;
 
-#[cfg(debug_assertions)]
-use panic_halt as _;
+//#[cfg(debug_assertions)]
+//use panic_halt as _;
 
 #[cfg(not(debug_assertions))]
 use panic_abort as _;
-
-use da14531_sdk::{
-    app_modules::{
-        app_common::app::app_prf_enable, app_env_get_conidx, default_app_on_init,
-        register_app_callbacks,
-    },
-    bindings::default_app_on_disconnect,
-    ble_stack::{
-        host::gap::{
-            gapc::task::{GapcConnectionReqInd, GapcDisconnectInd},
-            GAP_INVALID_CONIDX,
-        },
-        rwble_hl::error::HlErr::GAP_ERR_CANCELED,
-    },
-    platform::{arch::register_main_loop_callbacks, core_modules::crypto::aes_init},
-    register_user_operation_adv,
-};
-use rtt_target::rtt_init_print;
 
 use da14531_sdk::allocator::Da14531Allocator;
 
@@ -41,8 +23,38 @@ pub mod peripherals;
 #[global_allocator]
 static ALLOCATOR: Da14531Allocator = Da14531Allocator;
 
-#[no_mangle]
-fn user_on_connection(_conidx: u8, _param: *const da14531_sdk::bindings::gapc_connection_req_ind) {}
+#[cfg(debug_assertions)]
+#[inline(never)]
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    use core::fmt::Write;
+    use portable_atomic::{compiler_fence, Ordering};
+    use rtt_target::{ChannelMode, UpChannel};
 
-#[no_mangle]
-fn user_on_disconnect(_param: *const da14531_sdk::bindings::gapc_disconnect_ind) {}
+    // From now on we don't need interrupts. Restarting the MCU is the only way to get out of this
+    // panic handler.
+    cortex_m::interrupt::disable();
+
+    // Calling conjure is only safe if we have disabled interrupts, which we have.
+    let Some(mut ch) = (unsafe { UpChannel::conjure(0) }) else {
+        core::intrinsics::abort();
+    };
+
+    // Bringing in all the formatting functionality takes a lot of space, print "panic, halted"
+    // instead for now.
+    //let Ok(()) = writeln!(ch, "{}", info) else {
+    let Ok(()) = writeln!(ch, "panic, halted") else {
+        core::intrinsics::abort();
+    };
+
+    loop {
+        // Feeding the watchdog is implemented using the PAC (direct register access) instead of
+        // the HAL layer. This makes it possible to panic even before the HAL is initialized.
+        let sys_wdog = unsafe { &*da14531_hal::pac::SYS_WDOG::ptr() };
+        sys_wdog.watchdog_reg.modify(|_, w| unsafe {
+            w.wdog_val()
+                .bits(da14531_hal::sys_wdog::WATCHDOG_DEFAULT_PERIOD)
+        });
+        compiler_fence(Ordering::SeqCst);
+    }
+}

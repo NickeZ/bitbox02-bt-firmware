@@ -1,15 +1,22 @@
-bitbox02 bluetooth firmware
+# bitbox02 bluetooth firmware
 
-# Connect to device
+## Dependencies
+
+* ARM GCC Toolchain
+* da14531 SDK
+
+## Connect to device
 
 Run Jlink gdb server
 
 ```
-JLinkGDBServer -device da14531 -if SWD -ir
+cd bitbox02-bt
+make gdb-server
 ```
 
-Run firmware
+Run gdb, which will load firmware into RAM and start execution.
 
 ```
+cd bitbox02-bt
 make run
 ```

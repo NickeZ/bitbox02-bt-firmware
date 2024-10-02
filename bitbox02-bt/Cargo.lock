@@ -56,11 +56,12 @@ name = "bitbox02-bt"
 version = "0.1.0"
 dependencies = [
  "cortex-m",
+ "critical-section",
  "cty",
  "da14531-hal",
  "da14531-sdk",
  "panic-abort",
- "panic-halt",
+ "portable-atomic",
  "rtt-target 0.5.0",
 ]
 
@@ -319,16 +320,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4e20e6499bbbc412f280b04a42346b356c6fa0753d5fd22b7bd752ff34c778ee"
 
 [[package]]
-name = "panic-halt"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de96540e0ebde571dc55c73d60ef407c653844e6f9a1e2fdbd40c07b9252d812"
-
-[[package]]
 name = "paste"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
+
+[[package]]
+name = "portable-atomic"
+version = "1.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da544ee218f0d287a911e9c99a39a8c9bc8fcad3cb8db5959940044ecfc67265"
 
 [[package]]
 name = "prettyplease"
