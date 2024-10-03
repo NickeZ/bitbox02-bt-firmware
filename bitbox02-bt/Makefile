@@ -5,9 +5,15 @@ TARGET=thumbv6m-none-eabi
 CARGO=cargo +nightly
 
 # Compile smaller verison of core/alloc
-CARGO_FLAGS=\
+CARGO_FLAGS_DEBUG=\
 	-Zbuild-std=core,alloc \
-	-Zbuild-std-features=optimize_for_size
+	-Zbuild-std-features=optimize_for_size \
+	--config .cargo/runner-debug.toml
+CARGO_FLAGS_RELEASE=\
+	--release \
+	-Zbuild-std=core,alloc \
+	-Zbuild-std-features=panic_immediate_abort,optimize_for_size \
+	--config .cargo/runner-release.toml
 
 # For debugging linking / compiler flag issues:
 # * pass -vv to cargo to see all cargo invocations and the output of all build.rs scripts.
@@ -16,23 +22,23 @@ CARGO_FLAGS=\
 
 .PHONY: build
 build:
-	@${CARGO} build ${CARGO_FLAGS} --target ${TARGET}
+	@${CARGO} build ${CARGO_FLAGS_DEBUG} --target ${TARGET}
 	@${SIZE} target/${TARGET}/debug/bitbox02-bt
 	@${OBJCOPY} -Obinary target/${TARGET}/debug/bitbox02-bt target/${TARGET}/debug/bitbox02-bt.bin
 
 .PHONY: build-release
 build-release:
-	@${CARGO} build --release ${CARGO_FLAGS} --target ${TARGET}
+	@${CARGO} build ${CARGO_FLAGS_RELEASE} --target ${TARGET}
 	@${SIZE} target/${TARGET}/release/bitbox02-bt
 	@${OBJCOPY} -Obinary target/${TARGET}/release/bitbox02-bt target/${TARGET}/release/bitbox02-bt.bin
 
 .PHONY: run
 run:
-	@${CARGO} run ${CARGO_FLAGS} --target ${TARGET}
+	@${CARGO} run ${CARGO_FLAGS_DEBUG} --target ${TARGET}
 
 .PHONY: run-release
 run-release:
-	@${CARGO} run --release ${CARGO_FLAGS} --target ${TARGET}
+	@${CARGO} run ${CARGO_FLAGS_RELEASE} --target ${TARGET}
 
 .PHONY: clean
 clean:
