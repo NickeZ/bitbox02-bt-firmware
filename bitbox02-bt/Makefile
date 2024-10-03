@@ -2,7 +2,7 @@ TOOLS=arm-none-eabi-
 SIZE=${TOOLS}size
 OBJCOPY=${TOOLS}objcopy
 TARGET=thumbv6m-none-eabi
-CARGO=cargo +nightly
+CARGO=cargo
 
 # Compile smaller verison of core/alloc
 CARGO_FLAGS_DEBUG=\
@@ -43,7 +43,3 @@ run-release:
 .PHONY: clean
 clean:
 	@${CARGO} clean
-
-.PHONY: gdb-server
-gdb-server:
-	JLinkGDBServer -device da14531 -if SWD -ir
