@@ -14,17 +14,17 @@
 
 FROM ubuntu:22.04
 
-# arm-none-eabi-gdb depends on libncurses5 and libtinfo5
+# arm-none-eabi-gdb depends on libncurses5, libncursesw5 and libtinfo5
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     curl \
     make \
     gcc \
     xz-utils \
-    bzip2 \
     unzip \
     patch \
     gnupg2 \
     libncurses5 \
+    libncursesw5 \
     libtinfo5 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -41,17 +41,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
 ARG TARGETPLATFORM
 RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
       GNU_TOOLCHAIN=https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-aarch64-arm-none-eabi.tar.xz \
-      GNU_TOOLCHAIN_HASH=c8824bffd057afce2259f7618254e840715f33523a3d4e4294f471208f976764 \
-      GNU_TOOLCHAIN_FORMAT=xz; \
+      GNU_TOOLCHAIN_HASH=c8824bffd057afce2259f7618254e840715f33523a3d4e4294f471208f976764; \
     else \
-      GNU_TOOLCHAIN=https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2018q4/gcc-arm-none-eabi-8-2018-q4-major-linux.tar.bz2 \
-      GNU_TOOLCHAIN_HASH=fb31fbdfe08406ece43eef5df623c0b2deb8b53e405e2c878300f7a1f303ee52 \
-      GNU_TOOLCHAIN_FORMAT=bz2; \
+      GNU_TOOLCHAIN=https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz \
+      GNU_TOOLCHAIN_HASH=95c011cee430e64dd6087c75c800f04b9c49832cc1000127a92a97f9c8d83af4; \
     fi; \
-    curl -sSLo gcc.tar.${GNU_TOOLCHAIN_FORMAT} ${GNU_TOOLCHAIN} && \
-    echo "$GNU_TOOLCHAIN_HASH gcc.tar.${GNU_TOOLCHAIN_FORMAT}" | sha256sum -c && \
-    tar -xf gcc.tar.${GNU_TOOLCHAIN_FORMAT} -C /usr/local --strip-components=1 && \
-    rm -f gcc.tar.${GNU_TOOLCHAIN_FORMAT}
+    curl -sSLo gcc.tar.xz ${GNU_TOOLCHAIN} && \
+    echo "$GNU_TOOLCHAIN_HASH gcc.tar.xz" | sha256sum -c && \
+    tar -xf gcc.tar.xz -C /usr/local --strip-components=1 && \
+    rm -f gcc.tar.xz
 
 # The da14531 SDK is not publicly available. So there needds to be a copy of it
 # in the same folder where the Dockerfile is.
@@ -59,6 +57,7 @@ ENV SDK_PATH=/opt/DA145xx_SDK/6.0.22.1401
 RUN --mount=source=.,target=/mnt \
     cd /opt && \
     unzip /mnt/SDK_6.0.22.1401.zip && \
+    cd /opt/DA145xx_SDK/6.0.22.1401 && \
     for patch in `ls /mnt/da14531-sdk/patches`; do patch -p1 < /mnt/da14531-sdk/patches/$patch; done
 
 # Install rust compiler

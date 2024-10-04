@@ -43,3 +43,7 @@ run-release:
 .PHONY: clean
 clean:
 	@${CARGO} clean
+
+.PHONY: doc
+doc:
+	@${CARGO} doc --document-private-items --open --target ${TARGET}

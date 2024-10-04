@@ -69,7 +69,6 @@ dockerdev () {
 
     # SYS_PTRACE is needed to run address sanitizer
     ${DOCKER} run \
-           --platform linux/arm64 \
            --detach \
            --interactive --tty \
            --name="$CONTAINER_NAME" \

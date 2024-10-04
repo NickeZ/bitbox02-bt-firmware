@@ -20,3 +20,15 @@ gdb-server:
 .PHONY: rtt-client
 rtt-client:
 	telnet localhost 19021
+
+.PHONY: build
+build:
+	${MAKE} -C bitbox02 build
+
+.PHONY: run
+run:
+	${MAKE} -C bitbox02 run
+
+.PHONY: clean
+clean:
+	${MAKE} -C bitbox02 clean
