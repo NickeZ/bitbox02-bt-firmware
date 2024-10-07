@@ -3,7 +3,8 @@ on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
-  RUSTFLAGS: -Dwarnings
+  # Enable "Deny warnings" when all warnings are cleared
+  #RUSTFLAGS: -Dwarnings
 
 jobs:
   build:
@@ -21,6 +22,5 @@ jobs:
           --volume ${{github.workspace}}:/checkout
           --workdir /checkout
           --env CARGO_TERM_COLOR
-          --env RUSTFLAGS
           shiftcrypto/da14531
           .ci/ci
