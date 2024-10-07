@@ -22,23 +22,23 @@ CARGO_FLAGS_RELEASE=\
 
 .PHONY: build
 build:
-	@${CARGO} build ${CARGO_FLAGS_DEBUG} --target ${TARGET}
+	@${CARGO} build ${CARGO_FLAGS_DEBUG}
 	@${SIZE} target/${TARGET}/debug/bitbox02-bt
 	@${OBJCOPY} -Obinary target/${TARGET}/debug/bitbox02-bt target/${TARGET}/debug/bitbox02-bt.bin
 
 .PHONY: build-release
 build-release:
-	@${CARGO} build ${CARGO_FLAGS_RELEASE} --target ${TARGET}
+	@${CARGO} build ${CARGO_FLAGS_RELEASE}
 	@${SIZE} target/${TARGET}/release/bitbox02-bt
 	@${OBJCOPY} -Obinary target/${TARGET}/release/bitbox02-bt target/${TARGET}/release/bitbox02-bt.bin
 
 .PHONY: run
 run:
-	@${CARGO} run ${CARGO_FLAGS_DEBUG} --target ${TARGET}
+	@${CARGO} run ${CARGO_FLAGS_DEBUG}
 
 .PHONY: run-release
 run-release:
-	@${CARGO} run ${CARGO_FLAGS_RELEASE} --target ${TARGET}
+	@${CARGO} run ${CARGO_FLAGS_RELEASE}
 
 .PHONY: clean
 clean:
@@ -46,4 +46,4 @@ clean:
 
 .PHONY: doc
 doc:
-	@${CARGO} doc --document-private-items --open --target ${TARGET}
+	@${CARGO} doc --document-private-items --open

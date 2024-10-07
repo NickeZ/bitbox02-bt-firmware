@@ -1,0 +1,4 @@
+# We want to configure the default target here so that tooling like
+# rust-analyzer and clippy can pick it up
+[build]
+target = "thumbv6m-none-eabi"
