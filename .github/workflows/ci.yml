@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: make dockerpull
+      - run: podman pull shiftcrypto/da14531
 
-      - run: docker run -e CARGO_TERM_COLOR -e RUSTFLAGS shiftcrypto/da14531 .ci/c
+      - run: >
+        podman run
+          --volume ${{github.workspace}}:/checkout
+          --workdir /checkout
+          --env CARGO_TERM_COLOR
+          --env RUSTFLAGS
+          shiftcrypto/da14531
+          .ci/ci
