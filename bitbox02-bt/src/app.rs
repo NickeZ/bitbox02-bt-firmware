@@ -39,6 +39,16 @@ where
 //    rprintln!("tick")
 //}
 
+impl<P, BLE> Default for App<P, BLE>
+where
+    P: PeripheralsDriver,
+    BLE: BleDriver,
+{
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Business logic of the application
 impl<P, BLE> App<P, BLE>
 where

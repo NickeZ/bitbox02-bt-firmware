@@ -1,10 +1,7 @@
 //use core::ptr::addr_of_mut;
 use da14531_sdk::{
-    app_modules::{
-        app_common::app::app_prf_enable, app_env_get_conidx, default_app_on_init,
-        register_app_callbacks,
-    },
-    bindings::default_app_on_disconnect,
+    app_modules::{app_common::app::app_prf_enable, app_env_get_conidx, register_app_callbacks},
+    bindings::{default_app_on_disconnect, default_app_on_init},
     ble_stack::{
         host::gap::{
             gapc::task::{GapcConnectionReqInd, GapcDisconnectInd},
@@ -61,7 +58,7 @@ pub fn app_on_init_callback() {
     aes_init(false);
     unsafe { app() }.init();
 
-    default_app_on_init();
+    unsafe { default_app_on_init() };
 }
 
 // Register app callback handlers
@@ -75,14 +72,14 @@ register_app_callbacks! {
 }
 
 #[inline]
-pub fn user_app_adv_undirect_complete(_status: u8) {
+fn user_app_adv_undirect_complete(_status: u8) {
     //if status == GAP_ERR_CANCELED as u8 {
     //    app().on_start_hibernation();
     //}
 }
 
 #[inline]
-pub fn user_app_connection(conidx: u8, _param: &GapcConnectionReqInd) {
+fn user_app_connection(conidx: u8, _param: &GapcConnectionReqInd) {
     if app_env_get_conidx(conidx) != GAP_INVALID_CONIDX as u8 {
         app_prf_enable(conidx);
 
@@ -93,7 +90,7 @@ pub fn user_app_connection(conidx: u8, _param: &GapcConnectionReqInd) {
 }
 
 #[inline]
-pub fn user_app_disconnect(_param: &GapcDisconnectInd) {
+fn user_app_disconnect(_param: &GapcDisconnectInd) {
     unsafe { default_app_on_disconnect(core::ptr::null()) };
 
     unsafe { app() }.on_disconnect();

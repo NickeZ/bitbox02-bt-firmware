@@ -52,6 +52,12 @@ impl Da14531Peripherals {
     }
 }
 
+impl Default for Da14531Peripherals {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl PeripheralsDriver for Da14531Peripherals {
     fn new() -> Self {
         Self::new()
