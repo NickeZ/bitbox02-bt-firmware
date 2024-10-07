@@ -14,4 +14,4 @@ jobs:
 
       - run: make dockerpull
 
-      - run: docker run -e CARGO_TERM_COLOR=${CARGO_TERM_COLOR} -e RUSTFLAGS=${RUSTFLAGS} shiftcrypto/da14531 .ci/c
+      - run: docker run -e CARGO_TERM_COLOR -e RUSTFLAGS shiftcrypto/da14531 .ci/c
