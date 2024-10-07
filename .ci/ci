@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+cargo check
+
+cargo clippy
+
+cargo build
