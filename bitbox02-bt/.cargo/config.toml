@@ -9,7 +9,6 @@ rustflags = [
     # By default cargo doesn't link witih libc. We need to link with libc since we use nano libc
     '-C', "default-linker-libraries",
     "-C", "link-arg=-Wl,-Tldscript_DA14531.lds",
-    "-C", "link-arg=-Wl,--gc-sections",
 ]
 
 [profile.release]
