@@ -2,3 +2,6 @@
 # rust-analyzer and clippy can pick it up
 [build]
 target = "thumbv6m-none-eabi"
+
+[patch.crates-io]
+da14531-sdk-macros = {path="da14531-sdk-macros"}
