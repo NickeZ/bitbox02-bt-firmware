@@ -1,8 +1,9 @@
 use da14531_hal::{
-    cm::{peripheral::SCB, Peripherals as CmPeripherals},
-    crg_aon::{CrgAon, CrgAonExt},
-    crg_top::{CrgTop, CrgTopExt},
-    nvic::{Nvic, NvicExt},
+    //cm::{peripheral::SCB, Peripherals as CmPeripherals},
+    //crg_aon::{CrgAon, CrgAonExt},
+    //crg_top::{CrgTop, CrgTopExt},
+    //nvic::{Nvic, NvicExt},
+    crg_aon::CrgAonExt,
     pac::Peripherals,
     sys_wdog::{SysWdog, SysWdogExt},
 };
@@ -16,10 +17,10 @@ use crate::app::PeripheralsDriver;
 /// This struct contains all relevant peripherals and implements the `PeripheralsDriver` trait
 pub struct Da14531Peripherals {
     sys_wdog: SysWdog,
-    nvic: Nvic,
-    scb: SCB,
-    crg_aon: CrgAon,
-    crg_top: CrgTop,
+    //nvic: Nvic,
+    //scb: SCB,
+    //crg_aon: CrgAon,
+    //crg_top: CrgTop,
 }
 
 impl Da14531Peripherals {
@@ -29,24 +30,24 @@ impl Da14531Peripherals {
         patch_func();
 
         let dp = Peripherals::take().unwrap();
-        let cp = CmPeripherals::take().unwrap();
+        //let cp = CmPeripherals::take().unwrap();
 
         // Get necessary peripherals
-        let nvic = cp.NVIC.constrain();
-        let scb = cp.SCB;
-        let crg_top = dp.CRG_TOP.constrain();
-        let mut crg_aon = dp.CRG_AON.constrain();
         let sys_wdog = dp.SYS_WDOG.constrain();
+        //let nvic = cp.NVIC.constrain();
+        //let scb = cp.SCB;
+        //let crg_top = dp.CRG_TOP.constrain();
+        let mut crg_aon = dp.CRG_AON.constrain();
 
         // Enable pad latch
         crg_aon.set_pad_latch_en(true);
 
         Da14531Peripherals {
             sys_wdog,
-            nvic,
-            crg_aon,
-            crg_top,
-            scb,
+            //nvic,
+            //crg_aon,
+            //crg_top,
+            //scb,
         }
     }
 }

@@ -1,4 +1,5 @@
 #![feature(core_intrinsics)]
+#![allow(internal_features)]
 #![no_std]
 #![no_main]
 extern crate alloc;
@@ -29,7 +30,7 @@ static ALLOCATOR: Da14531Allocator = Da14531Allocator;
 fn panic(_info: &core::panic::PanicInfo) -> ! {
     use core::fmt::Write;
     use portable_atomic::{compiler_fence, Ordering};
-    use rtt_target::{ChannelMode, UpChannel};
+    use rtt_target::UpChannel;
 
     // From now on we don't need interrupts. Restarting the MCU is the only way to get out of this
     // panic handler.

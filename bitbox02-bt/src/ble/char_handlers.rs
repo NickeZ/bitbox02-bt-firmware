@@ -26,7 +26,7 @@ pub fn data_in_write_handler(param: &Custs1ValWriteInd) {
     rprintln!("write got {:?} bytes", input.len());
     let buf = unsafe { &mut BUF[..] };
     unsafe { BUF_LEN = input.len() };
-    &buf[0..input.len()].copy_from_slice(input);
+    buf[0..input.len()].copy_from_slice(input)
 }
 
 pub fn data_out_read_handler(param: &Custs1ValueReqInd) {
@@ -53,9 +53,9 @@ pub fn data_out_read_handler(param: &Custs1ValueReqInd) {
     response.fields().status = ATT_ERR_NO_ERROR as u8;
 
     // Copy value
-    let mut value = unsafe { response.fields().value.as_mut_slice(255) };
+    let value = unsafe { response.fields().value.as_mut_slice(255) };
 
-    &mut value[0..buf_len].copy_from_slice(&buf[0..buf_len]);
+    value[0..buf_len].copy_from_slice(&buf[0..buf_len]);
 
     response.send();
 }

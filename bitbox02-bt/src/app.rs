@@ -1,13 +1,13 @@
-use alloc::boxed::Box;
+//use alloc::boxed::Box;
 use core::marker::PhantomData;
 
 use rtt_target::{rprint, rprintln};
 
 use da14531_sdk::app_modules::configure_device_information_service;
-use da14531_sdk::app_modules::timer::AppTimer;
+//use da14531_sdk::app_modules::timer::AppTimer;
 
-/// Stop advertising and go to hibernation after X secs
-//const APP_ADVERTISTE_STOP_TIMER: u32 = 60;
+// /// Stop advertising and go to hibernation after X secs
+// const APP_ADVERTISTE_STOP_TIMER: u32 = 60;
 
 /// Defines an interface to access the peripherals
 pub trait PeripheralsDriver {
@@ -29,16 +29,15 @@ where
     P: 'static + PeripheralsDriver,
     BLE: 'static + BleDriver,
 {
-    ///
     peripherals: Option<P>,
     connection_handle: Option<u32>,
     _ble: PhantomData<BLE>,
-    timer: Option<AppTimer>,
+    //timer: Option<AppTimer>,
 }
 
-fn timer_cb() {
-    rprintln!("tick")
-}
+//fn timer_cb() {
+//    rprintln!("tick")
+//}
 
 /// Business logic of the application
 impl<P, BLE> App<P, BLE>
@@ -52,7 +51,7 @@ where
             peripherals: None,
             _ble: PhantomData,
             connection_handle: None,
-            timer: None,
+            //timer: None,
         }
     }
 
@@ -117,10 +116,10 @@ where
     pub fn init(&mut self) {
         rprint!("Initializing timer...");
         //let cb = Box::new(|| critical_section::with(|_| rprintln!("tick")));
-        let period = 1 * 100; /* 1s, unit is 10ms */
-        let timer = AppTimer::new(1, Box::new(timer_cb)).unwrap();
+        //let period = 1 * 100; /* 1s, unit is 10ms */
+        //let timer = AppTimer::new(1, Box::new(timer_cb)).unwrap();
         //timer.start();
-        self.timer = Some(timer);
+        //self.timer = Some(timer);
         rprintln!("done!");
     }
 
