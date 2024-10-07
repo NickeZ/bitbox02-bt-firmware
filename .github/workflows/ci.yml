@@ -15,7 +15,7 @@ jobs:
       - run: podman pull shiftcrypto/da14531
 
       - run: >
-        podman run
+          podman run
           --volume ${{github.workspace}}:/checkout
           --workdir /checkout
           --env CARGO_TERM_COLOR
