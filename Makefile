@@ -9,6 +9,14 @@ dockerdev:
 dockerinit:
 	${DOCKER} build -t shiftcrypto/da14531 .
 
+.PHONY: dockerpull
+dockerpull:
+	${DOCKER} pull shiftcrypto/da14531
+
+.PHONY: dockerpush
+dockerpush:
+	${DOCKER} build --push --platform linux/amd64,linux/arm64 -t shiftcrypto/da14531 .
+
 .PHONY: dockerstop
 dockerstop:
 	@./scripts/dockerenv.sh stop
